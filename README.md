@@ -19,7 +19,7 @@ Benchmarking types:
  - pgbench read-only
  - pgbench read-write, small database size 0.5X RAM
  - pgbench read-write, database 2X size RAM
- - OLTPBench "[http://oltpbenchmark.com/wiki/index.php?title=Main_Page](webapp)" workload (Epinions, SEATS or Wikipedia)
+ - OLTPBench "[webapp](http://oltpbenchmark.com/wiki/index.php?title=Main_Page)" workload (Epinions, SEATS or Wikipedia)
   
 
     
