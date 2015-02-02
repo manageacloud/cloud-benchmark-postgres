@@ -7,7 +7,7 @@ This will include the intersection of:
  - The following cloud providers: 
   -  Heroku cloud
   -  Google cloud
-  -  Amazon Web Services
+  -  Amazon Web Services (and RDS)
   -  Rackspace
   -  DigitalOcean
   -  OpenShift
