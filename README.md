@@ -23,7 +23,7 @@ Benchmarking types:
  - pgbench read-write, database 2X size RAM
  - OLTPBench "[webapp](http://oltpbenchmark.com/wiki/index.php?title=Main_Page)" workload (Epinions, SEATS or Wikipedia)
   
-## Benchmarking PostgreSQL 9.4 default configuration
+## Create a PostgreSQL 9.4 database
 
 1. Install mac cli tool
 
@@ -48,9 +48,33 @@ Benchmarking types:
 
  Please note that by default the server lifetime is 90 minutes (access to the [full documentation](https://alpha.manageacloud.com/article/orchestration/cli/instance/create) )
  
-3. Create the Pgbench server
+## Heroku
+
+Create the application
+```
+heroku apps:create appname
+```
+
+Add PostgreSQL 9.4
+```
+heroku addons:add heroku-postgresql --version=9.4 --app postgrestest1990
+```
+
+Get the connection string
+```
+$ heroku config:get DATABASE_URL --app postgrestest1990
+postgres://pihtadsfzzjsoq:KEwOJJNJBn_htuOKx_wwAwZJXT@ec2-54-243-187-192.compute-1.amazonaws.com:5432/d94kb6edmh5ntt
+```
+The output of this value is the one to use in the parameter CONN_STRING for the PG_BENCH server.
+
+## Create the PGBench server 
+
  ```
  mac instance create -c pgbench -e DBNAME=pgbench PGUSER=benchuser IP=123.456.79.90 BENCH_CREATION="-i -s 70" BENCH_TEST="-c 4 -j 2 -T 10" -p rackspaceus
+ ```
+ or
+ ```
+ mac instance create -c pgbench -e CONN_STRING="postgres://username:password@server:5432/database" BENCH_CREATION="-i -s 70" BENCH_TEST="-c 4 -j 2 -T 10" -p rackspaceus
  ```
  Creates a server with the pgbench tool installed, and runs the benchmark test agains the postgres server running in the given IP.
  
@@ -58,15 +82,25 @@ Benchmarking types:
  * DBNAME: name of the database.
  * PGUSER: user that has access to the benchmark database
  * IP: PostgreSQL server IP
+ * CONN_STRING: If present, substitutes DBNAME, PGUSER and IP
  * BENCH_CREATION: Additional parameters needed for the benchmark database creation. 
  The command for the creation of the benchmark database is:
  ```
  pgbench -h $IP -U $PGUSER -q $BENCH_CREATION $DBNAME
  ```
+ or 
+ ```
+ pgbench $CONN_STRING -q $BENCH_CREATION $DBNAME
+ ```
+
  * BENCH_TEST: Additional parameters for the benchmark test itself.
  The command for the benchmark tests is:
  ```
  pgbench -h $IP -U $PGUSER $BENCH_TEST $DBNAME
+ ```
+ or 
+ ```
+ pgbench $CONN_STRING $BENCH_TEST $DBNAME
  ```
  
  - /tmp/output_benchmark contains the benchmark output
