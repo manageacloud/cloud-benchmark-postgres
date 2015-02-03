@@ -57,12 +57,12 @@ heroku apps:create appname
 
 Add PostgreSQL 9.4
 ```
-heroku addons:add heroku-postgresql --version=9.4 --app postgrestest1990
+heroku addons:add heroku-postgresql --version=9.4 --app appname
 ```
 
 Get the connection string
 ```
-$ heroku config:get DATABASE_URL --app postgrestest1990
+$ heroku config:get DATABASE_URL --app appname
 postgres://pihtadsfzzjsoq:KEwOJJNJBn_htuOKx_wwAwZJXT@ec2-54-243-187-192.compute-1.amazonaws.com:5432/d94kb6edmh5ntt
 ```
 The output of this value is the one to use in the parameter CONN_STRING for the PG_BENCH server.
