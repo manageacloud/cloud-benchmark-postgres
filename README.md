@@ -31,7 +31,7 @@ Benchmarking types:
   pip install mac
   ```
 
-2. Create the PostgreSQL server with the default configuration
+2. Create the PostgreSQL server with the [default configuration](https://alpha.manageacloud.com/configuration/postgres_94_default)
  ```
  mac instance create -c postgres_94_default -e DBNAME=pgbench PGUSER=benchuser -p rackspaceus
  ```
@@ -68,6 +68,8 @@ postgres://pihtadsfzzjsoq:KEwOJJNJBn_htuOKx_wwAwZJXT@ec2-54-243-187-192.compute-
 The output of this value is the one to use in the parameter CONN_STRING for the PG_BENCH server.
 
 ## Create the PGBench server 
+
+[Creates server with PgBench](https://alpha.manageacloud.com/configuration/pgbench) and runs the benchmarking tests.
 
  ```
  mac instance create -c pgbench -e DBNAME=pgbench PGUSER=benchuser IP=123.456.79.90 BENCH_CREATION="-i -s 70" BENCH_TEST="-c 4 -j 2 -T 10" -p rackspaceus
