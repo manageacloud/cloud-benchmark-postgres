@@ -7,15 +7,16 @@ This will include the intersection of:
  - The following cloud providers: 
   -  Heroku cloud
   -  Google cloud
-  -  Amazon Web Services (and RDS)
+  -  Amazon Web Services
   -  Rackspace
   -  DigitalOcean
   -  OpenShift
+  -  Amazon RDS
 
 
 -  Optimized vs default Postgres configuration
 -  Different workloads
--  Postgres version 9.4 or 9.3
+-  Postgres version 9.3
 
 Benchmarking types:
  - pgbench read-only
@@ -23,7 +24,7 @@ Benchmarking types:
  - pgbench read-write, database 2X size RAM
  - OLTPBench "[webapp](http://oltpbenchmark.com/wiki/index.php?title=Main_Page)" workload (Epinions, SEATS or Wikipedia)
   
-## Create a PostgreSQL 9.4 database
+## Create a PostgreSQL 9.3 database
 
 1. Install mac cli tool
 
@@ -31,9 +32,9 @@ Benchmarking types:
   pip install mac
   ```
 
-2. Create the PostgreSQL server with the [default configuration](https://alpha.manageacloud.com/configuration/postgres_94_default)
+2. Create the PostgreSQL server with the [default configuration](https://alpha.manageacloud.com/configuration/postgres_93_default)
  ```
- mac instance create -c postgres_94_default -e DBNAME=pgbench PGUSER=benchuser -p rackspaceus
+ mac instance create -c postgres_93_default -e DBNAME=pgbench PGUSER=benchuser -p rackspaceus
  ```
  You will be guided to add the hardware type and the location. -p (--provider) can be digitalocean, rackspaceus, amazon and gce. 
  
@@ -55,9 +56,9 @@ Create the application
 heroku apps:create appname
 ```
 
-Add PostgreSQL 9.4
+Add PostgreSQL 9.3
 ```
-heroku addons:add heroku-postgresql --version=9.4 --app appname
+heroku addons:add heroku-postgresql --version=9.3 --app appname
 ```
 
 Get the connection string
