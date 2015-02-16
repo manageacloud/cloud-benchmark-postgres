@@ -1,4 +1,4 @@
-description: Postgres 9.3 Benchmark R/W memory test
+description: Postgres 9.3 Benchmark RW in-memory test
 version: 0.1a7
 timestamp: '2015-02-09 17:45:44'
 roles:
@@ -10,9 +10,7 @@ roles:
       environment:
       - DBNAME: pgbench
       - PGUSER: benchuser
-      hd:
-      - /dev/sdm: 100:io1:1000
-      name: 'awsrwlargepostgres'
+      name: 'rsrwlpg'
       release: any
   pgbench:
     instance create:
@@ -25,19 +23,21 @@ roles:
       - IP: postgres.PRIVATE_IP
       - BENCH_CREATION: -i -s 1000 --foreign-keys
       - BENCH_TEST: -c 16 -T 900
-      name: 'awsrwlargebench'
+      hd:
+      - /dev/sdm: 100:io1:1000
+      name: 'rsrwlpgbench'
       release: ubuntu
 infrastructures:
   postgres:
-    hardware: r3.2xlarge
-    location: us-east-1
-    provider: amazon
+    hardware: IAD/memory1-60
+    location: IAD
+    provider: rackspaceus
     role: postgres
     amount: 1
   pgbench:
-    hardware: r3.2xlarge
-    location: us-east-1
-    provider: amazon
+    hardware: IAD/memory1-60
+    location: IAD
+    provider: rackspaceus
     role: pgbench
     amount: 1
 

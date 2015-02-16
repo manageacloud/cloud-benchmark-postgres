@@ -10,6 +10,8 @@ roles:
       environment:
       - DBNAME: pgbench
       - PGUSER: benchuser
+      hd:
+      - /dev/sdm: 100:io1:1000
       name: 'awsrosmallpostgres'
       release: any
   pgbench:
@@ -20,7 +22,7 @@ roles:
       environment:
       - DBNAME: pgbench
       - PGUSER: benchuser
-      - IP: postgres.PUBLIC_IP
+      - IP: postgres.PRIVATE_IP
       - BENCH_CREATION: -i -s 100 --foreign-keys
       - BENCH_TEST: -c 4 -T 900 -S
       name: 'awsrosmallbench'

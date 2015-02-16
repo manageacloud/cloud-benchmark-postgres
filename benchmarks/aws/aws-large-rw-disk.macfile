@@ -20,9 +20,11 @@ roles:
       environment:
       - DBNAME: pgbench
       - PGUSER: benchuser
-      - IP: postgres.PUBLIC_IP
+      - IP: postgres.PRIVATE_IP
       - BENCH_CREATION: -i -s 7000 --foreign-keys
       - BENCH_TEST: -c 16 -T 900
+      hd:
+      - /dev/sdm: 100:io1:1000
       name: 'awsrwdlargebench'
       release: ubuntu
 infrastructures:
