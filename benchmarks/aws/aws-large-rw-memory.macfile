@@ -10,7 +10,7 @@ roles:
       environment:
       - DBNAME: pgbench
       - PGUSER: benchuser
-      name: ''
+      name: 'awsrwlargepostgres'
       release: any
   pgbench:
     instance create:
@@ -22,8 +22,8 @@ roles:
       - PGUSER: benchuser
       - IP: postgres.PUBLIC_IP
       - BENCH_CREATION: -i -s 1000 --foreign-keys
-      - BENCH_TEST: -c 16 -T 10
-      name: ''
+      - BENCH_TEST: -c 16 -T 900
+      name: 'awsrwlargebench'
       release: ubuntu
 infrastructures:
   postgres:
