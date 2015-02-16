@@ -1,0 +1,52 @@
+description: Postgres 9.3 Benchmark R/W memory test
+version: 0.1a7
+timestamp: '2015-02-09 17:45:44'
+roles:
+  postgres:
+    instance create:
+      branch: master
+      configuration: postgres_93_customized
+      deployment: testing
+      environment:
+      - DBNAME: pgbench
+      - PGUSER: benchuser
+      - SHAREDBUFFERS: 8GB
+      - WALBUFFERS: 32MB
+      - EFFECTIVECACHESIZE: 50GB
+      - MAINTENANCEWORKMEM: 1GB
+      - RANDOMPAGECOST: 1.5
+      - WALLEVEL: hot_standby
+      - STATSTEMPDIRECTORY: \/pgramdisk\/pg_stat_tmp
+      - CHECKPOINTSEGMENTS: 128
+      - CHECKPOINTCOMPLETIONTARGET: 0.9
+      hd:
+      - /dev/sdm: 50:io1:1000
+      name: 'awsrwlargepostgres'
+      release: any
+  pgbench:
+    instance create:
+      branch: master
+      configuration: pgbench
+      deployment: testing
+      environment:
+      - DBNAME: pgbench
+      - PGUSER: benchuser
+      - IP: postgres.PRIVATE_IP
+      - BENCH_CREATION: -i -s 1000 --foreign-keys
+      - BENCH_TEST: -c 16 -T 900
+      name: 'awsrwlargebench'
+      release: ubuntu
+infrastructures:
+  postgres:
+    hardware: r3.2xlarge
+    location: us-east-1
+    provider: amazon
+    role: postgres
+    amount: 1
+  pgbench:
+    hardware: r3.2xlarge
+    location: us-east-1
+    provider: amazon
+    role: pgbench
+    amount: 1
+

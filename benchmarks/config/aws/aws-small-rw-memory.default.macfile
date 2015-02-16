@@ -1,0 +1,44 @@
+description: Postgres 9.3 Benchmark R/W memory test
+version: 0.1a7
+timestamp: '2015-02-09 17:45:44'
+roles:
+  postgres:
+    instance create:
+      branch: master
+      configuration: postgres_93_customized
+      deployment: testing
+      environment:
+      - DBNAME: pgbench
+      - PGUSER: benchuser
+      - WALLEVEL: hot_standby
+      hd:
+      - /dev/sdm: 50:io1:1000
+      name: 'awsrwsmallpostgres'
+      release: any
+  pgbench:
+    instance create:
+      branch: master
+      configuration: pgbench
+      deployment: testing
+      environment:
+      - DBNAME: pgbench
+      - PGUSER: benchuser
+      - IP: postgres.PRIVATE_IP
+      - BENCH_CREATION: -i -s 100 --foreign-keys
+      - BENCH_TEST: -c 4 -T 900
+      name: 'awsrwsmallbench'
+      release: ubuntu
+infrastructures:
+  postgres:
+    hardware: m3.medium
+    location: us-east-1
+    provider: amazon
+    role: postgres
+    amount: 1
+  pgbench:
+    hardware: m3.medium
+    location: us-east-1
+    provider: amazon
+    role: pgbench
+    amount: 1
+

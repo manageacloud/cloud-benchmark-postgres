@@ -1,16 +1,19 @@
-description: Postgres 9.3 BenchmarkRW disk test
+description: Postgres 9.3 Benchmark R/W on-disk test
 version: 0.1a7
 timestamp: '2015-02-09 17:45:44'
 roles:
   postgres:
     instance create:
       branch: master
-      configuration: postgres_93_default
+      configuration: postgres_93_customized
       deployment: testing
       environment:
       - DBNAME: pgbench
       - PGUSER: benchuser
-      name: 'rsrwdisspg'
+      - WALLEVEL: hot_standby
+      hd:
+      - /dev/sdm: 50:io1:1000
+      name: 'awsrwdisksmallpostgres'
       release: any
   pgbench:
     instance create:
@@ -23,19 +26,19 @@ roles:
       - IP: postgres.PRIVATE_IP
       - BENCH_CREATION: -i -s 400 --foreign-keys
       - BENCH_TEST: -c 4 -T 900
-      name: 'rsrwdissbench'
+      name: 'awsrwdisksmallpgbench'
       release: ubuntu
 infrastructures:
   postgres:
-    hardware: IAD/general1-4
-    location: IAD
-    provider: rackspaceus
+    hardware: m3.medium
+    location: us-east-1
+    provider: amazon
     role: postgres
     amount: 1
   pgbench:
-    hardware: IAD/general1-4
-    location: IAD
-    provider: rackspaceus
+    hardware: m3.medium
+    location: us-east-1
+    provider: amazon
     role: pgbench
     amount: 1
 

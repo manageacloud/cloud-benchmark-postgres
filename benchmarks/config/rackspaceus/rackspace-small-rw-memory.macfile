@@ -5,12 +5,13 @@ roles:
   postgres:
     instance create:
       branch: master
-      configuration: postgres_93_default
+      configuration: postgres_93_customized
       deployment: testing
       environment:
       - DBNAME: pgbench
       - PGUSER: benchuser
-      name: 'rsrwlpg'
+      - WALLEVEL: hot_standby
+      name: 'rsrwmemspg'
       release: any
   pgbench:
     instance create:
@@ -21,21 +22,19 @@ roles:
       - DBNAME: pgbench
       - PGUSER: benchuser
       - IP: postgres.PRIVATE_IP
-      - BENCH_CREATION: -i -s 1000 --foreign-keys
-      - BENCH_TEST: -c 16 -T 900
-      hd:
-      - /dev/sdm: 100:io1:1000
-      name: 'rsrwlpgbench'
+      - BENCH_CREATION: -i -s 100 --foreign-keys
+      - BENCH_TEST: -c 4 -T 900
+      name: 'rsrwmemsbench'
       release: ubuntu
 infrastructures:
   postgres:
-    hardware: IAD/memory1-60
+    hardware: IAD/general1-4
     location: IAD
     provider: rackspaceus
     role: postgres
     amount: 1
   pgbench:
-    hardware: IAD/memory1-60
+    hardware: IAD/general1-4
     location: IAD
     provider: rackspaceus
     role: pgbench

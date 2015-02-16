@@ -5,11 +5,12 @@ roles:
   postgres:
     instance create:
       branch: master
-      configuration: postgres_93_default
+      configuration: postgres_93_customized
       deployment: testing
       environment:
       - DBNAME: pgbench
       - PGUSER: benchuser
+      - WALLEVEL: hot_standby
       name: 'gcersrospg'
       release: any
   pgbench:
