@@ -28,13 +28,13 @@ roles:
       release: ubuntu
 infrastructures:
   postgres:
-    hardware: IAD/general1-4
+    hardware: IAD/general1-2
     location: IAD
     provider: rackspaceus
     role: postgres
     amount: 1
   pgbench:
-    hardware: IAD/general1-4
+    hardware: IAD/general1-2
     location: IAD
     provider: rackspaceus
     role: pgbench
