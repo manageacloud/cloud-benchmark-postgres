@@ -24,8 +24,6 @@ roles:
       - IP: postgres.PRIVATE_IP
       - BENCH_CREATION: -i -s 1000 --foreign-keys
       - BENCH_TEST: -c 16 -T 900 -S
-      hd:
-      - /dev/sdm: 100:io1:1000
       name: 'rsrolpgbench'
       release: ubuntu
 infrastructures:
