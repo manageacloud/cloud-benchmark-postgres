@@ -1,0 +1,44 @@
+description: Postgres 9.3 Benchmark R-O on-disk test
+version: 0.1a7
+timestamp: '2015-02-09 17:45:44'
+roles:
+  postgres:
+    instance create:
+      branch: master
+      configuration: postgres_93_customized
+      deployment: testing
+      environment:
+      - DBNAME: pgbench
+      - PGUSER: benchuser
+      - WALLEVEL: hot_standby
+      name: 'dorwdlargepostgres'
+      release: any
+  pgbench:
+    instance create:
+      branch: master
+      configuration: pgbench
+      deployment: testing
+      environment:
+      - DBNAME: pgbench
+      - PGUSER: benchuser
+      - IP: postgres.PRIVATE_IP
+      - BENCH_CREATION: -i -s 7000 --foreign-keys
+      - BENCH_TEST: -c 16 -T 900
+      hd:
+      - /dev/sdm: 50:io1:1000
+      name: 'dorwdlargebench'
+      release: ubuntu
+infrastructures:
+  postgres:
+    hardware: 48gb
+    location: sfo1
+    provider: digitalocean
+    role: postgres
+    amount: 1
+  pgbench:
+    hardware: 48gb
+    location: sfo1
+    provider: digitalocean
+    role: pgbench
+    amount: 1
+

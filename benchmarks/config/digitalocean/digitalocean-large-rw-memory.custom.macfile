@@ -1,4 +1,4 @@
-description: Postgres 9.3 Benchmark R-O in-memory test
+description: Postgres 9.3 Benchmark R/W memory test
 version: 0.1a7
 timestamp: '2015-02-09 17:45:44'
 roles:
@@ -10,8 +10,18 @@ roles:
       environment:
       - DBNAME: pgbench
       - PGUSER: benchuser
+      - SHAREDBUFFERS: 8GB
+      - WALBUFFERS: 32MB
+      - EFFECTIVECACHESIZE: 50GB
+      - MAINTENANCEWORKMEM: 1GB
+      - RANDOMPAGECOST: 1.5
       - WALLEVEL: hot_standby
-      name: 'rsrolpg'
+      - STATSTEMPDIRECTORY: \/pgramdisk\/pg_stat_tmp
+      - CHECKPOINTSEGMENTS: 128
+      - CHECKPOINTCOMPLETIONTARGET: 0.9
+      hd:
+      - /dev/sdm: 50:io1:1000
+      name: 'dorwlargepostgres'
       release: any
   pgbench:
     instance create:
@@ -23,20 +33,20 @@ roles:
       - PGUSER: benchuser
       - IP: postgres.PRIVATE_IP
       - BENCH_CREATION: -i -s 1000 --foreign-keys
-      - BENCH_TEST: -c 16 -T 900 -S
-      name: 'rsrolpgbench'
+      - BENCH_TEST: -c 16 -T 900
+      name: 'dorwlargebench'
       release: ubuntu
 infrastructures:
   postgres:
-    hardware: IAD/memory1-60
-    location: IAD
-    provider: rackspaceus
+    hardware: 48gb
+    location: sfo1
+    provider: digitalocean
     role: postgres
     amount: 1
   pgbench:
-    hardware: IAD/memory1-60
-    location: IAD
-    provider: rackspaceus
+    hardware: 48gb
+    location: sfo1
+    provider: digitalocean
     role: pgbench
     amount: 1
 
