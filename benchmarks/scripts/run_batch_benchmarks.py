@@ -35,6 +35,7 @@ for benchmark in benchmarks:
         for id in ids:
             cmd_destroy =  "%s instance destroy -i %s " % (mac, id)
             print "[+] Destroying " + cmd_destroy
+            os.system(cmd_destroy)
 
         cmd_destroy =  "%s instance destroy -i %s " % (mac, last_id)
         print "[+] Destroying " + cmd_destroy
