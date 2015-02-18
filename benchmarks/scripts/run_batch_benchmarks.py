@@ -25,7 +25,7 @@ for benchmark in benchmarks:
         full_path = "../config/%s/%s.macfile" % (provider, filename)
         cmd_create = "%s macfile %s" % (mac, full_path)
         print "[+] Creating " + cmd_create
-        p = subprocess.Popen(['python', '/home/tk421/code/manageacloud-cli/maccli/mac_cli.py', 'macfile', full_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        p = subprocess.Popen([mac, 'macfile', full_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = p.communicate()
         ids = re.findall( "^Instance '([a-zA-Z0-9]+)' status 'Ready'$", out, re.MULTILINE)
         last_id = ids.pop()
