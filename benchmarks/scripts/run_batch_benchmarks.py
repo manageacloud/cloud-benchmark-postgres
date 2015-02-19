@@ -28,15 +28,25 @@ for benchmark in benchmarks:
         p = subprocess.Popen([mac, 'macfile', full_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = p.communicate()
         ids = re.findall( "^Instance '([a-zA-Z0-9]+)' status 'Ready'$", out, re.MULTILINE)
-        last_id = ids.pop()
-        cmd_fetch = "%s instance ssh -c 'cat /tmp/pgbenchlog /tmp/output_benchmark' -i %s > ../data/%s/%s/%s.`date +%%d%%m%%y`" % (mac, last_id, provider, directory, filename)
-        print "[+] Fetching " + cmd_fetch
-        os.system(cmd_fetch)
-        for id in ids:
-            cmd_destroy =  "%s instance destroy -i %s " % (mac, id)
+        if len(ids) > 0:
+            last_id = ids.pop()
+            cmd_fetch = "%s instance ssh -c 'cat /tmp/pgbenchlog /tmp/output_benchmark' -i %s > ../data/%s/%s/%s.`date +%%d%%m%%y`" % (mac, last_id, provider, directory, filename)
+            print "[+] Fetching " + cmd_fetch
+            os.system(cmd_fetch)
+            for id in ids:
+                cmd_destroy =  "%s instance destroy -i %s " % (mac, id)
+                print "[+] Destroying " + cmd_destroy
+                os.system(cmd_destroy)
+
+            cmd_destroy =  "%s instance destroy -i %s " % (mac, last_id)
             print "[+] Destroying " + cmd_destroy
             os.system(cmd_destroy)
-
-        cmd_destroy =  "%s instance destroy -i %s " % (mac, last_id)
-        print "[+] Destroying " + cmd_destroy
-        os.system(cmd_destroy)
+        else:
+            # TODO implement proper logging
+            print "[W] No suitables instances in output!"
+            f = open("/tmp/%s.log" % filename,'a')
+            f.write('OUT\n')
+            f.write(out +'\n')
+            f.write('ERROR\n')
+            f.write(err + '\n')
+            f.close()
