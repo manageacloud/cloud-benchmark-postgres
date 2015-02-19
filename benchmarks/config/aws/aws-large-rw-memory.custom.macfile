@@ -20,7 +20,7 @@ roles:
       - CHECKPOINTSEGMENTS: 128
       - CHECKPOINTCOMPLETIONTARGET: 0.9
       hd:
-      - /dev/sdm: 50:io1:4000
+      - /dev/sdm: 200:io1:4000
       name: 'awsrwlargepostgres'
       release: any
   pgbench:
