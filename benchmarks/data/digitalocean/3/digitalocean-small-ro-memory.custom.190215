@@ -1,0 +1,11 @@
+	0:54.48,bench_creation
+	15:00.13,benchmark
+transaction type: SELECT only
+scaling factor: 100
+query mode: simple
+number of clients: 4
+number of threads: 1
+duration: 900 s
+number of transactions actually processed: 7089648
+tps = 7877.243572 (including connections establishing)
+tps = 7877.741077 (excluding connections establishing)
