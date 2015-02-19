@@ -19,6 +19,8 @@ roles:
       - STATSTEMPDIRECTORY: \/pgramdisk\/pg_stat_tmp
       - CHECKPOINTSEGMENTS: 128
       - CHECKPOINTCOMPLETIONTARGET: 0.9
+      hd:
+      - /dev/sdm: 50:io1:1000
       name: 'awsrwdlargepostgres'
       release: any
   pgbench:
@@ -32,8 +34,6 @@ roles:
       - IP: postgres.PRIVATE_IP
       - BENCH_CREATION: -i -s 7000 --foreign-keys
       - BENCH_TEST: -c 16 -T 900
-      hd:
-      - /dev/sdm: 50:io1:1000
       name: 'awsrwdlargebench'
       release: ubuntu
 infrastructures:

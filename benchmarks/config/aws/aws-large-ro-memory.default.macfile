@@ -11,6 +11,8 @@ roles:
       - DBNAME: pgbench
       - PGUSER: benchuser
       - WALLEVEL: hot_standby
+      hd:
+      - /dev/sdm: 100:io1:1000
       name: 'awsrolargepostgres'
       release: any
   pgbench:
@@ -24,8 +26,6 @@ roles:
       - IP: postgres.PRIVATE_IP
       - BENCH_CREATION: -i -s 1000 --foreign-keys
       - BENCH_TEST: -c 16 -T 900 -S
-      hd:
-      - /dev/sdm: 100:io1:1000
       name: 'awsroslargebench'
       release: ubuntu
 infrastructures:
