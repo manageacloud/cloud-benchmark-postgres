@@ -12,7 +12,7 @@ roles:
       - PGUSER: benchuser
       - WALLEVEL: hot_standby
       hd:
-      - /dev/sdm: 200:io1:4000
+      - /dev/sdm:200:io1:4000
       name: 'awsrwdlargepostgres'
       release: any
   pgbench:

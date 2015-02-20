@@ -20,7 +20,7 @@ roles:
       - CHECKPOINTSEGMENTS: 32
       - CHECKPOINTCOMPLETIONTARGET: 0.9
       hd:
-      - /dev/sdm: 50:io1:1000
+      - /dev/sdm:50:io1:1000
       name: 'awsrosmallpostgres'
       release: any
   pgbench:
