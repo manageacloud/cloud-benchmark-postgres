@@ -10,18 +10,18 @@ roles:
       environment:
       - DBNAME: pgbench
       - PGUSER: benchuser
-      - SHAREDBUFFERS: 8GB
+      - SHAREDBUFFERS: 1GB
       - WALBUFFERS: 32MB
-      - EFFECTIVECACHESIZE: 50GB
-      - MAINTENANCEWORKMEM: 1GB
+      - EFFECTIVECACHESIZE: 3GB
+      - MAINTENANCEWORKMEM: 128MB
       - RANDOMPAGECOST: 1.5
       - WALLEVEL: hot_standby
       - STATSTEMPDIRECTORY: \/pgramdisk\/pg_stat_tmp
-      - CHECKPOINTSEGMENTS: 128
+      - CHECKPOINTSEGMENTS: 32
       - CHECKPOINTCOMPLETIONTARGET: 0.9
       hd:
-      - postgres: 50:ssd
-      name: 'awsrolargepostgres'
+      - /dev/sdm:50:io1:1000
+      name: 'gcerosmallpostgres'
       release: any
   pgbench:
     instance create:
@@ -32,21 +32,21 @@ roles:
       - DBNAME: pgbench
       - PGUSER: benchuser
       - IP: postgres.PRIVATE_IP
-      - BENCH_CREATION: -i -s 1000 --foreign-keys
-      - BENCH_TEST: -c 16 -T 900 -S
-      name: 'awsroslargebench'
+      - BENCH_CREATION: -i -s 400 --foreign-keys
+      - BENCH_TEST: -c 4 -T 900
+      name: 'gcerosmallbench'
       release: ubuntu
 infrastructures:
   postgres:
-    hardware: r3.2xlarge
-    location: us-east-1
-    provider: amazon
+    hardware: https://www.googleapis.com/compute/v1/projects/soy-sound-613/zones/us-central1-a/machineTypes/n1-standard-1
+    location: us-central1-a
+    provider: gce
     role: postgres
     amount: 1
   pgbench:
-    hardware: r3.2xlarge
-    location: us-east-1
-    provider: amazon
+    hardware: https://www.googleapis.com/compute/v1/projects/soy-sound-613/zones/us-central1-a/machineTypes/n1-standard-1
+    location: us-central1-a
+    provider: gce
     role: pgbench
     amount: 1
 

@@ -1,4 +1,4 @@
-description: Postgres 9.3 Benchmark R-O in-memory test
+description: Postgres 9.3 Benchmark R/W on-disk test
 version: 0.1a7
 timestamp: '2015-02-09 17:45:44'
 roles:
@@ -11,7 +11,9 @@ roles:
       - DBNAME: pgbench
       - PGUSER: benchuser
       - WALLEVEL: hot_standby
-      name: 'gcersrospg'
+      hd:
+      - /dev/sdm:50:io1:1000
+      name: 'gcerwdisksmallpostgres'
       release: any
   pgbench:
     instance create:
@@ -22,9 +24,9 @@ roles:
       - DBNAME: pgbench
       - PGUSER: benchuser
       - IP: postgres.PRIVATE_IP
-      - BENCH_CREATION: -i -s 100 --foreign-keys
-      - BENCH_TEST: -c 4 -T 900 -S
-      name: 'gcerosmallbench'
+      - BENCH_CREATION: -i -s 400 --foreign-keys
+      - BENCH_TEST: -c 4 -T 900
+      name: 'gcerwdisksmallpgbench'
       release: ubuntu
 infrastructures:
   postgres:

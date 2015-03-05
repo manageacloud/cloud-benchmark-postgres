@@ -1,4 +1,4 @@
-description: Postgres 9.3 Benchmark R-O in-memory test
+description: Postgres 9.3 Benchmark R/W memory test
 version: 0.1a7
 timestamp: '2015-02-09 17:45:44'
 roles:
@@ -10,18 +10,10 @@ roles:
       environment:
       - DBNAME: pgbench
       - PGUSER: benchuser
-      - SHAREDBUFFERS: 8GB
-      - WALBUFFERS: 32MB
-      - EFFECTIVECACHESIZE: 50GB
-      - MAINTENANCEWORKMEM: 1GB
-      - RANDOMPAGECOST: 1.5
       - WALLEVEL: hot_standby
-      - STATSTEMPDIRECTORY: \/pgramdisk\/pg_stat_tmp
-      - CHECKPOINTSEGMENTS: 128
-      - CHECKPOINTCOMPLETIONTARGET: 0.9
       hd:
-      - postgres: 50:ssd
-      name: 'awsrolargepostgres'
+      - /dev/sdm:50:io1:1000
+      name: 'gcerwsmallpostgres'
       release: any
   pgbench:
     instance create:
@@ -32,21 +24,21 @@ roles:
       - DBNAME: pgbench
       - PGUSER: benchuser
       - IP: postgres.PRIVATE_IP
-      - BENCH_CREATION: -i -s 1000 --foreign-keys
-      - BENCH_TEST: -c 16 -T 900 -S
-      name: 'awsroslargebench'
+      - BENCH_CREATION: -i -s 100 --foreign-keys
+      - BENCH_TEST: -c 4 -T 900
+      name: 'gcerwsmallbench'
       release: ubuntu
 infrastructures:
   postgres:
-    hardware: r3.2xlarge
-    location: us-east-1
-    provider: amazon
+    hardware: https://www.googleapis.com/compute/v1/projects/soy-sound-613/zones/us-central1-a/machineTypes/n1-standard-1
+    location: us-central1-a
+    provider: gce
     role: postgres
     amount: 1
   pgbench:
-    hardware: r3.2xlarge
-    location: us-east-1
-    provider: amazon
+    hardware: https://www.googleapis.com/compute/v1/projects/soy-sound-613/zones/us-central1-a/machineTypes/n1-standard-1
+    location: us-central1-a
+    provider: gce
     role: pgbench
     amount: 1
 
