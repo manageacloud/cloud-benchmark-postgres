@@ -10,15 +10,7 @@ roles:
       environment:
       - DBNAME: pgbench
       - PGUSER: benchuser
-      - SHAREDBUFFERS: 8GB
-      - WALBUFFERS: 32MB
-      - EFFECTIVECACHESIZE: 50GB
-      - MAINTENANCEWORKMEM: 1GB
-      - RANDOMPAGECOST: 1.5
       - WALLEVEL: hot_standby
-      - STATSTEMPDIRECTORY: \/pgramdisk\/pg_stat_tmp
-      - CHECKPOINTSEGMENTS: 128
-      - CHECKPOINTCOMPLETIONTARGET: 0.9
       hd:
       - postgres: 50:ssd
       name: 'awsrolargepostgres'
@@ -38,15 +30,15 @@ roles:
       release: ubuntu
 infrastructures:
   postgres:
-    hardware: r3.2xlarge
-    location: us-east-1
-    provider: amazon
+    hardware: https://www.googleapis.com/compute/v1/projects/soy-sound-613/zones/us-central1-b/machineTypes/n1-highmem-8
+    location: us-central1-a
+    provider: gce
     role: postgres
     amount: 1
   pgbench:
-    hardware: r3.2xlarge
-    location: us-east-1
-    provider: amazon
+    hardware: https://www.googleapis.com/compute/v1/projects/soy-sound-613/zones/us-central1-b/machineTypes/n1-highmem-8
+    location: us-central1-a
+    provider: gce
     role: pgbench
     amount: 1
 
