@@ -30,13 +30,13 @@ roles:
       release: ubuntu
 infrastructures:
   postgres:
-    hardware: https://www.googleapis.com/compute/v1/projects/soy-sound-613/zones/us-central1-b/machineTypes/n1-highmem-8
+    hardware: https://www.googleapis.com/compute/v1/projects/soy-sound-613/zones/us-central1-a/machineTypes/n1-highmem-8
     location: us-central1-a
     provider: gce
     role: postgres
     amount: 1
   pgbench:
-    hardware: https://www.googleapis.com/compute/v1/projects/soy-sound-613/zones/us-central1-b/machineTypes/n1-highmem-8
+    hardware: https://www.googleapis.com/compute/v1/projects/soy-sound-613/zones/us-central1-a/machineTypes/n1-highmem-8
     location: us-central1-a
     provider: gce
     role: pgbench
