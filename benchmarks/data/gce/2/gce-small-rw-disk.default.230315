@@ -1,0 +1,11 @@
+	21:32.42,bench_creation
+	15:00.10,benchmark
+transaction type: TPC-B (sort of)
+scaling factor: 400
+query mode: simple
+number of clients: 4
+number of threads: 1
+duration: 900 s
+number of transactions actually processed: 246174
+tps = 273.519525 (including connections establishing)
+tps = 273.531381 (excluding connections establishing)
