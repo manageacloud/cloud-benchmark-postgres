@@ -9,7 +9,8 @@ mac = os.environ.get('MAC_PATH', "mac")
 #   4 - size type
 
 benchmarks = ["ro-memory", "rw-memory", "rw-disk" ]
-types = ["custom", "default" ]
+# types = ["custom", "default" ]
+types = [ "default" ]
 
 if sys.argv is None or len(sys.argv) < 4:
     print "More arguments are needed"
