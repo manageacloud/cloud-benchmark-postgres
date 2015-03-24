@@ -1,0 +1,4 @@
+ 
+Command exited with non-zero status 1
+	11:40.32,bench_creation
+cat: /tmp/output_benchmark: No such file or directory
