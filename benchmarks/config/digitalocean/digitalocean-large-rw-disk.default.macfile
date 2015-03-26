@@ -6,39 +6,37 @@ roles:
     instance create:
       branch: master
       configuration: postgres_93_customized
-      deployment: testing
       environment:
       - DBNAME: pgbench
       - PGUSER: benchuser
       - WALLEVEL: hot_standby
-      name: 'dorwdlargepostgres'
-      release: any
   pgbench:
     instance create:
       branch: master
       configuration: pgbench
-      deployment: testing
       environment:
       - DBNAME: pgbench
       - PGUSER: benchuser
       - IP: postgres.PRIVATE_IP
       - BENCH_CREATION: -i -s 7000 --foreign-keys
       - BENCH_TEST: -c 16 -T 900
-      hd:
-      - /dev/sdm: 50:io1:1000
-      name: 'dorwdlargebench'
-      release: ubuntu
 infrastructures:
   postgres:
+    name: 'dorwdlargepostgres'
     hardware: 48gb
     location: sfo1
     provider: digitalocean
+    deployment: production
     role: postgres
+    release: any
     amount: 1
   pgbench:
+    name: 'dorwdlargebench'
     hardware: 48gb
     location: sfo1
+    deployment: production
     provider: digitalocean
     role: pgbench
+    release: ubuntu
     amount: 1
 

@@ -6,39 +6,39 @@ roles:
     instance create:
       branch: master
       configuration: postgres_93_customized
-      deployment: testing
       environment:
       - DBNAME: pgbench
       - PGUSER: benchuser
       - WALLEVEL: hot_standby
       hd:
-      - postgres: 50:ssd
-      name: 'gcerwdlargepostgres'
-      release: any
+      - postgres: 250:ssd
   pgbench:
     instance create:
       branch: master
       configuration: pgbench
-      deployment: testing
       environment:
       - DBNAME: pgbench
       - PGUSER: benchuser
       - IP: postgres.PRIVATE_IP
       - BENCH_CREATION: -i -s 7000 --foreign-keys
       - BENCH_TEST: -c 16 -T 900
-      name: 'gcerwdlargebench'
-      release: ubuntu
 infrastructures:
   postgres:
     hardware: https://www.googleapis.com/compute/v1/projects/soy-sound-613/zones/us-central1-a/machineTypes/n1-highmem-8
     location: us-central1-a
     provider: gce
     role: postgres
+    deployment: production
+    name: 'gcerwdlargepostgres'
+    release: any
     amount: 1
   pgbench:
     hardware: https://www.googleapis.com/compute/v1/projects/soy-sound-613/zones/us-central1-a/machineTypes/n1-highmem-8
     location: us-central1-a
     provider: gce
     role: pgbench
+    deployment: production
+    name: 'gcerwdlargebench'
+    release: ubuntu
     amount: 1
 
